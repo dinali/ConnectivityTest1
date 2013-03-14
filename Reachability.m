@@ -206,8 +206,6 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     // woah
     self.reachabilityObject = self;
     
-    
-
     // first we need to create a serial queue
     // we allocate this once for the lifetime of the notifier
     self.reachabilitySerialQueue = dispatch_queue_create("com.tonymillion.reachability", NULL);
@@ -318,8 +316,8 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
         // we're on 3G
         if(!self.reachableOnWWAN)
         {
-            // we dont want to connect when on 3G
-            connectionUP = NO;
+            // we dont want to connect when on 3G // TODO: for test purposes, I changed this to YES, but it should be NO
+            connectionUP = YES;
         }
     }
 #endif
@@ -506,6 +504,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kReachabilityChangedNotification 
                                                             object:self];
+       // NSLog(@"reachability changed");
     });
 }
 
